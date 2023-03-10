@@ -3,8 +3,9 @@ package com.techreturners.bookmanager.exception;
 
 
 public class BookNotFoundException extends RuntimeException {
-    public BookNotFoundException() {
-        super();
+    String defaultMessage = " book is not found with id:";
+    public BookNotFoundException(String message) {
+        super(message);
     }
 }
 

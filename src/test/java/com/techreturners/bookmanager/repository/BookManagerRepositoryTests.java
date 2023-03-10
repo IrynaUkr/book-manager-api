@@ -48,7 +48,7 @@ class BookManagerRepositoryTests {
         bookManagerRepository.save(book);
         bookManagerRepository.delete(book);
         List<Book> all = bookManagerRepository.findAll();
-        assertThat(all).hasSize(0);
+        assertThat(all).isEmpty();
     }
 
 }

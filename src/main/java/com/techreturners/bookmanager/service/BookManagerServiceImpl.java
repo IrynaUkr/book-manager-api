@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookManagerServiceImpl implements BookManagerService {
 
+    public static final String BOOK_IS_NOT_FOUND = "book is not found";
     private final BookManagerRepository bookManagerRepository;
 
     @Override
@@ -26,11 +27,17 @@ public class BookManagerServiceImpl implements BookManagerService {
 
     @Override
     public Book getBookById(Long id) {
-        return bookManagerRepository.findById(id).orElseThrow(BookNotFoundException::new);
+        return bookManagerRepository
+                .findById(id)
+                .orElseThrow(() -> new BookNotFoundException(BOOK_IS_NOT_FOUND));
     }
+
     @Override
     public void updateBookById(Long id, Book book) {
-        Book retrievedBook = bookManagerRepository.findById(id).orElseThrow(BookNotFoundException::new);
+        Book retrievedBook = bookManagerRepository
+                .findById(id)
+                .orElseThrow(() -> new BookNotFoundException(BOOK_IS_NOT_FOUND));
+
 
         retrievedBook.setTitle(book.getTitle());
         retrievedBook.setDescription(book.getDescription());
@@ -42,7 +49,9 @@ public class BookManagerServiceImpl implements BookManagerService {
 
     @Override
     public void deleteBookById(Long id) {
-        Book persistedBook = bookManagerRepository.findById(id).orElseThrow(BookNotFoundException::new);
+        Book persistedBook = bookManagerRepository
+                .findById(id)
+                .orElseThrow(() -> new BookNotFoundException(BOOK_IS_NOT_FOUND));
         bookManagerRepository.delete(persistedBook);
     }
 
