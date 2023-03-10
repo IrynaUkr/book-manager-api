@@ -1,5 +1,6 @@
 package com.techreturners.bookmanager.service;
 
+import com.techreturners.bookmanager.exception.BookAlreadyExistException;
 import com.techreturners.bookmanager.exception.BookNotFoundException;
 import com.techreturners.bookmanager.model.Book;
 import com.techreturners.bookmanager.repository.BookManagerRepository;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,16 @@ public class BookManagerServiceImpl implements BookManagerService {
 
     @Override
     public Book insertBook(Book book) {
-        return bookManagerRepository.save(book);
+        List<Book> bookList = bookManagerRepository
+                .findAll()
+                .stream()
+                .filter(b -> Objects.equals(b.getId(), book.getId()))
+                .toList();
+        if (bookList.isEmpty()) {
+            return bookManagerRepository.save(book);
+        } else {
+            throw new BookAlreadyExistException("the book is already exist");
+        }
     }
 
     @Override

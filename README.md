@@ -1,56 +1,32 @@
 # 📖 Minimalist Book Manager API
 
-## Introduction
-This is the starter repository for the Further APIs session. It provides a start to creating a Minimalist Book Manager API
-using a Test-Driven Development approach.
-
-### Pre-Requisites
-- Java SE Development Kit 17
-- Maven
-
-### Technologies & Dependencies
-- Spring Boot
-- Spring Web
-- H2 Database
-- Lombok
-- Spring Data JPA
-
-### How to Get Started
-- Fork this repo to your Github and then clone the forked version of this repo
-
-### Main Entry Point
-- The Main Entry Point for the application is: [BookmanagerApplication.java](src/main/java/com/techreturners/bookmanager/BookmanagerApplication.java)
-
-### Running the Unit Tests
-- You can run the unit tests in IntelliJ, or you can go to your terminal and inside the root of this directory, run:
-
-`mvn test`
-
-### Tasks
-
-Here are some tasks for you to work on:
-
-📘 Discussion Task
-
-Explore the code and make notes on the following features and how it is being implemented in the code. We'd like you to note down what classes and methods are used and how the objects interact.
-
-The features are:
+The functionality of app has methods:
 - Get All Books
 - Get a Book by ID
 - Add a Book
-- Update a Book
+- Update a Book by id
+- Delete Book by id
 
-📘 Task 1: Implement the following User Story with tests.
+All  methods are called using REST API.
 
-`User Story: As a user, I want to use the Book Manager API to delete a book using its ID`
+The controller handles the user HTTP request, using matching to the endpoint and request mapping.
+Controller  aim is receive the request and call the appropriate the service's method.  
+Controller has an @RestController annotation. It  indicates that the data returned by each method will 
+be written straight into the response body instead of rendering a template.
+Service is responsible for the processing request and accordingly to the request calls 
+the appropriate repository method.
+
+Repository is an Interface, which extends CrudRepository and parametrized with  specific Entity.
+CrudRepository is a Spring Data interface for generic CRUD operations on a repository of a specific type.
+It provides several methods out of the box for interacting with a database.
+Using these methods we can have the high level of abstraction
+and access the database layer for retrieving, deleting, creating and updating data.  
 
 
-📘 Extension Task: Oh no! 😭 We've only covered the happy paths in the solution, can you figure out a way
-to add in exception handling to the project? 
+the id is unique, so if someone wants to add a book with an ID for a book that already exists, 
+the method throws BookAlreadyExist Exception.
 
-- Clue 1: What if someone wants to add a book with an ID for a book that already exists? How do we handle this gracefully?
+ if someone wants to find a book by an ID that doesn't yet exist,
+ the method throws BookNoFound Exception
 
-
-- Clue 2: What if someone wants to find a book by an ID that doesn't yet exist? 
-  How can we improve the API by handling errors gracefully and show a helpful message to the client?
   
