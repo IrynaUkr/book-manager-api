@@ -2,6 +2,8 @@ package com.techreturners.bookmanager.controller;
 
 import com.techreturners.bookmanager.model.Book;
 import com.techreturners.bookmanager.service.BookManagerService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,10 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/book")
+@RequiredArgsConstructor
+@Slf4j
 public class BookManagerController {
 
-    @Autowired
-    BookManagerService bookManagerService;
+    private final BookManagerService bookManagerService;
 
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
@@ -41,6 +44,11 @@ public class BookManagerController {
     public ResponseEntity<Book> updateBookById(@PathVariable("bookId") Long bookId, @RequestBody Book book) {
         bookManagerService.updateBookById(bookId, book);
         return new ResponseEntity<>(bookManagerService.getBookById(bookId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBookById(@PathVariable Long id){
+        bookManagerService.deleteBookById(id);
     }
 
 }
