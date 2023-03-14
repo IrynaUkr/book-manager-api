@@ -10,5 +10,6 @@ import java.util.List;
 public interface BookManagerRepository extends CrudRepository<Book, Long> {
     List<Book> findAll();
 
+
     void deleteBookById(Long id);
 }

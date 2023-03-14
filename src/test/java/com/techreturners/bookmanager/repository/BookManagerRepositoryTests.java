@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @DataJpaTest
 class BookManagerRepositoryTests {
@@ -21,7 +23,7 @@ class BookManagerRepositoryTests {
 
     @BeforeEach
     void setUp(){
-        book = new Book(1L, "Book One", "This is the description for Book One", "Person One", Genre.Education);
+        book = new Book(108L, "Book One", "This is the description for Book One", "Person One", Genre.Education);
 
     }
 
@@ -48,7 +50,8 @@ class BookManagerRepositoryTests {
         bookManagerRepository.save(book);
         bookManagerRepository.delete(book);
         List<Book> all = bookManagerRepository.findAll();
-        assertThat(all).isEmpty();
+        boolean contains = all.contains(book);
+        assertFalse(contains);
     }
 
 }
